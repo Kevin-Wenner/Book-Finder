@@ -4,11 +4,11 @@ const {AuthenticationError} = require("apollo-server-express");
 
 const resolvers ={
     Query: {
-        user: async (parent, args, contex) => {
+        me: async (parent, args, contex) => {
             if(context.user){
-                const userData = await User.findOne({
-                    $or: [{ _id: user ? user._id : params.id }, { username: params.username }],
-                  })
+                const userData = await User.findOne(
+                    {_id: context.user._id}
+                  )
                 .select("-__v -password")
                 .populate("books");
             }
