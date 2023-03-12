@@ -11,6 +11,8 @@ const resolvers ={
                   )
                 .select("-__v -password")
                 .populate("books");
+
+                return userData
             }
             throw new AuthenticationError('Not logged in');
         }
@@ -26,7 +28,7 @@ const resolvers ={
             }
             return updatedUser
         },
-        deleteBook: async (parent, args, contex) => {
+        removeBook: async (parent, args, contex) => {
             if(context.user){
                 const updatedUser = await User.findByIdAndUpdate(
                     { _id: user._id },
@@ -44,7 +46,7 @@ const resolvers ={
             const token = signToken(user);
             return{token, user};
         },
-        createUser: async (parent, arg) => {
+        addUser: async (parent, arg) => {
             const user = await User.create(args);
             const token = signToken(user);
             return{token, user};
